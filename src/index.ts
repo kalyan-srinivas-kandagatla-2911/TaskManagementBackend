@@ -11,7 +11,7 @@ import resolvers from "./resolvers/index";
 import cors from "cors";
 import { json } from "body-parser";
 import jwt from "jsonwebtoken"
-import { User } from "./entities/user"
+import { User } from "../src/entities/user"
 
 dotenv.config()
 
