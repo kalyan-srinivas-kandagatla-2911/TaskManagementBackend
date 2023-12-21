@@ -1,0 +1,39 @@
+{
+  "name": "task_management_backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@apollo/server": "^4.9.5",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.20.2",
+    "class-validator": "^0.14.0",
+    "cookie-parser": "^1.4.6",
+    "crypto": "^1.0.1",
+    "dotenv": "^16.3.1",
+    "graphql": "^16.8.1",
+    "graphql-scalars": "^1.22.4",
+    "jsonwebtoken": "^9.0.2",
+    "mailgun-js": "^0.22.0",
+    "pg": "^8.11.3",
+    "razorpay": "^2.9.2",
+    "reflect-metadata": "^0.2.1",
+    "type-graphql": "^2.0.0-beta.2",
+    "typeorm": "^0.3.17",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/cookie-parser": "^1.4.6",
+    "@types/cors": "^2.8.17",
+    "@types/jsonwebtoken": "^9.0.5",
+    "@types/mailgun-js": "^0.22.18",
+    "ts-node-dev": "^2.0.0"
+  }
+}
