@@ -12,12 +12,13 @@ import cors from "cors";
 import { json } from "body-parser";
 import jwt from "jsonwebtoken"
 import { User } from "../src/entities/user"
+import entities from "./entities";
 
 dotenv.config()
 
 // const corsOrigin = ["http://localhost:3000"]
 
-const port = process.env.PORT || 7000
+const port = process.env.PORT || 8000
 const bootstrap = async () => {
   const schema = await buildSchema({
     resolvers: resolvers,
@@ -65,20 +66,16 @@ const bootstrap = async () => {
       
       else if (req.headers.authorization) {
         const token = req.headers.authorization.split("token=")[1]
-        console.log("3")
         if(token) {
-          console.log("4")
           const decoded = jwt.verify(
             token,
             process.env.JWT_SECRET! 
             
           ) as any;
-          console.log("5")
           
               user = await User.findOne({
                 where: { id: decoded.id } 
               })
-          console.log("6")
         }
       }
       return { req, res, user };
@@ -97,7 +94,7 @@ const connection = new DataSource({
   username:process.env.USERNAME,
   password:process.env.PASSWORD,
   database:process.env.DATABASE,
-  entities:[User],
+  entities:entities,
   logging: true,
   synchronize:true
   
