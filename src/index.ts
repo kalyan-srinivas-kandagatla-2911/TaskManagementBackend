@@ -12,12 +12,13 @@ import cors from "cors";
 import { json } from "body-parser";
 import jwt from "jsonwebtoken"
 import { User } from "../src/entities/user"
+import entities from "./entities";
 
 dotenv.config()
 
 // const corsOrigin = ["http://localhost:3000"]
 
-const port = process.env.PORT || 7000
+const port = process.env.PORT || 4000
 const bootstrap = async () => {
   const schema = await buildSchema({
     resolvers: resolvers,
@@ -97,7 +98,7 @@ const connection = new DataSource({
   username:process.env.USERNAME,
   password:process.env.PASSWORD,
   database:process.env.DATABASE,
-  entities:[User],
+  entities:entities,
   logging: true,
   synchronize:true
   
