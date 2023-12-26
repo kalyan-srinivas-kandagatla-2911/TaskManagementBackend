@@ -42,13 +42,7 @@ const bootstrap = async () => {
     json(),
     // console.log("122"),
     expressMiddleware(server,{
-    context: async ({
-      req,
-      res,
-    }:{
-      req: express.Request;
-      res: express.Response;
-    }) => {
+    context: async ({ req,res }:{req: express.Request,res: express.Response;}) => {
       let user: any;
       if (req.headers.cookie) {
         
