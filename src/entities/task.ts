@@ -16,21 +16,19 @@ export class Task extends BaseEntity{
   @Column()
   desciption!: string
 
-  @Field()
+  // this column will be nullable true for a while and before deploying backend we have to change it 
+  @Field(() => Date, { nullable: true })
   @Column()
-  assignTeam!: "Team_One" | "Team_Two"
-  
+  deadline!: Date
   // this column will be nullable true for a while and before deploying backend we have to change it 
  
   @Field(() => Date, { nullable: true })
   @Column({ nullable: true })
   updatedAt!: Date
 
-  @Field(() => Date, { nullable: true })
-  @Column()
-  deadline!: Date
-
 }
+
+  
 
   
 

@@ -4,4 +4,27 @@ import { Field, InputType } from "type-graphql";
 export class SignUpInput{
   @Field()
   name!: string
+
+  @Field()
+  email!: string
+
+  @Field()
+  password!: string
+
+  @Field()
+  team!: "Team_One" | "Team_Two"
+
+}
+
+@InputType()
+export class SignInInput{
+  @Field()
+  email!: string
+
+  @Field()
+  password!: string
+
+  @Field()
+  team!: "Team_One" | "Team_Two"
+  
 }

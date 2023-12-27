@@ -5,20 +5,20 @@ import { createTaskInput } from "../types/task";
 
 @Resolver(Task)
 class TaskResolver{
+@Authorized(["ADMIN","TEAM_ONE","TEAM_TWO"])
+@Mutation(() => Task)
+async createTask(
+  @Arg("data") data:createTaskInput
+){
+  const date = new Date()
+  const task = Task.create({
+    ...data,
+    updatedAt: date
+  })
+  await task.save()
+  return task
+}
 
-  @Authorized(["ADMIN","TEAM_ONE","TEAM_TWO"])
-  @Mutation(() => Task)
-  async createTask(
-    @Arg("data") data:createTaskInput,
-   ){
-    const date = new Date()
-    // const task =  Task.create({
-    //   ...data,
-    //   updatedAt: date
-    // })
-    //  task.save()
-    // return task
-   }
 }
 
 export default TaskResolver
