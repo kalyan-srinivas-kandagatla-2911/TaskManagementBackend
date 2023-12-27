@@ -36,7 +36,11 @@ import bcrypt from "bcryptjs"
   team!: "Team_One" | "Team_Two"
 
   @Field(() => Role)
-  @Column()
+  @Column({
+    type:"enum",
+    enum:Role,
+    default:Role.USER
+  })
   role!: Role
 }
 

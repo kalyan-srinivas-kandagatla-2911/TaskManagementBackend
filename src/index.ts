@@ -13,6 +13,7 @@ import { json } from "body-parser";
 import jwt from "jsonwebtoken"
 import { User } from "../src/entities/user"
 import entities from "./entities";
+import { authChecker } from "./utils/auth";
 
 dotenv.config()
 
@@ -22,6 +23,7 @@ const port = process.env.PORT || 8000
 const bootstrap = async () => {
   const schema = await buildSchema({
     resolvers: resolvers,
+    authChecker: authChecker,
     validate: { forbidUnknownValues: false },
   })
 

@@ -15,7 +15,7 @@ class UserResolver{
     const ifUser = await User.findOne({ where:{ email: data.email } })
     if(ifUser) throw new Error("account already created please login to continue ")
     const totCount = await User.count()
-    const offId = "ICSR" + ("000" + (totCount+1)).slice(-2)
+    const offId = "ICSR" + ("000" + (totCount+1)).slice(-3)
     const user = User.create({
       ...data,
       offId
@@ -47,7 +47,7 @@ class UserResolver{
   async getMe(
     @Ctx() { user } : MyContext
   ){
-    return await User.findOne({ where:{ id: user.id } })
+    return user
   }
   @Query(() => String)
   helloworld(){

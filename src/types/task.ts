@@ -8,7 +8,7 @@ export class createTaskInput{
   @Field()
   description!: string
 
-  @Field(() => Date)
+  @Field(() => Date,{ nullable: true })
   deadline!: Date
 
   @Field()
