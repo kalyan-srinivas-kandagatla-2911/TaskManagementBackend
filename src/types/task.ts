@@ -12,7 +12,7 @@ export class createTaskInput{
   deadline!: Date
 
   @Field()
-  assignTeam!: "Team_One" | "Team_two"
+  assignTeam!: "Team_One" | "Team_Two"
 }
 
 @InputType()
