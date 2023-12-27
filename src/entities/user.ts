@@ -1,15 +1,24 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "../utils/userRole";
 import { Task } from "./task";
+import bcrypt from "bcryptjs"
 
  @Entity("User")
  @ObjectType("User")
  export class User extends BaseEntity{
+  @BeforeInsert()
+  async setPass(){
+    this.password = await bcrypt.hash( this.password, 12 )
+  }
 
   @Field((type) => ID)
   @PrimaryGeneratedColumn("uuid")
   id!: string;
+
+  @Field()
+  @Column()
+  offId!: string
 
   @Field()
   @Column()
@@ -19,7 +28,6 @@ import { Task } from "./task";
   @Column()
   email!:string
 
-  @Field()
   @Column()
   password!: string
 
@@ -30,8 +38,8 @@ import { Task } from "./task";
   @Field(() => Role)
   @Column()
   role!: Role
-
 }
+
 
 
 

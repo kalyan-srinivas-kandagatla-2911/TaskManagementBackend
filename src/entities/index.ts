@@ -1,3 +1,4 @@
+import { Task } from "./task";
 import { User } from "./user";
 
-export default [User]
+export default [User, Task]
