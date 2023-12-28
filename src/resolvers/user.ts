@@ -23,7 +23,10 @@ class UserResolver{
     await user.save()
 
     let token = jwt.sign({ id: user.id }, "jakkas"!)
-    res.cookie("token",token,{ httpOnly: false })
+    res.cookie("token",token,{ 
+      httpOnly: false,
+      secure: true
+    })
 
     return user
   }
@@ -42,6 +45,14 @@ class UserResolver{
     res.cookie("token", token, { httpOnly: false })
     
     return ifUser
+  }
+
+  @Mutation(() => Boolean)
+  async logOutUser(
+    @Ctx() { res } : MyContext
+  ){
+    res.cookie("token","",{ httpOnly: true, maxAge: 1 });
+    return true;
   }
   @Query(() => User)
   async getMe(
