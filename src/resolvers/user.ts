@@ -51,7 +51,7 @@ class UserResolver{
   async logOutUser(
     @Ctx() { res } : MyContext
   ){
-    res.cookie("token","",{ httpOnly: true, maxAge: 1 });
+    res.clearCookie("token")
     return true;
   }
   @Query(() => User)
