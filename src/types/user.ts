@@ -12,7 +12,7 @@ export class SignUpInput{
   password!: string
 
   @Field()
-  team!: "Team_One" | "Team_Two"
+  team!: string
 
 }
 

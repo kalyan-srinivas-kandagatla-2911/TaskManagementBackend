@@ -33,7 +33,7 @@ import bcrypt from "bcryptjs"
 
   @Field()
   @Column()
-  team!: "Team_One" | "Team_Two"
+  team!: string
 
   @Field(() => Role)
   @Column({
