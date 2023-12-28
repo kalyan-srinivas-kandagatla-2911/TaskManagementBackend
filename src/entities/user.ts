@@ -22,7 +22,7 @@ import bcrypt from "bcryptjs"
 
   @Field()
   @Column()
-  name!: string
+  username!: string
 
   @Field()
   @Column()

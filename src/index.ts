@@ -17,7 +17,7 @@ import { authChecker } from "./utils/auth";
 
 dotenv.config()
 
-// const corsOrigin = ["http://localhost:3000"]
+const corsOrigin = ["http://localhost:3000"]
 
 const port = process.env.PORT || 8000
 const bootstrap = async () => {
@@ -37,12 +37,11 @@ const bootstrap = async () => {
   await server.start()
   app.use(
     "/graphql",
-    // cors<cors.CorsRequest>({
-    //   origin:corsOrigin,
-    //   credentials:true
-    // }),
-    json(),
-    // console.log("122"),
+    cors<cors.CorsRequest>({
+      origin:corsOrigin,
+      credentials:true
+    }),
+    express.json(),
     expressMiddleware(server,{
     context: async ({ req,res }:{req: express.Request,res: express.Response;}) => {
       let user: any;
