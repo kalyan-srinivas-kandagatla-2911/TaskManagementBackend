@@ -38,8 +38,8 @@ class UserResolver{
   ){
     const ifUser = await User.findOne({ where: { email: data.email } })
     if(!ifUser) throw new Error("please create an account to continue")
-    const ifPassword = await bcrypt.compare(data.password, ifUser.password)
-    if(!ifPassword) throw new Error("invalid Crednential")
+    const crctPass = await bcrypt.compare(data.password, ifUser.password)
+    if(!crctPass) throw new Error("invalid Crednential")
     
     let token = jwt.sign({ id: ifUser.id }, "jakkas"!)
     res.cookie("token", token, { httpOnly: false })

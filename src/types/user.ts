@@ -28,3 +28,9 @@ export class SignInInput{
   team!: "Team_One" | "Team_Two"
   
 }
+
+@InputType()
+export class TaskAssignUserInput{
+  @Field()
+  name!: string
+}

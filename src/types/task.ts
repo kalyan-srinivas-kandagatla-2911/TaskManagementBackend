@@ -1,4 +1,7 @@
 import { Field, InputType } from "type-graphql";
+import { User } from "../entities/user";
+import { SignUpInput, TaskAssignUserInput } from "./user";
+
 
 @InputType()
 export class createTaskInput{
@@ -11,8 +14,9 @@ export class createTaskInput{
   @Field(() => Date,{ nullable: true })
   deadline!: Date
 
-  @Field()
-  assignTeam!: "Team_One" | "Team_Two"
+  @Field(() => [String])
+  assignTaskToUsers!: string[]
+
 }
 
 @InputType()

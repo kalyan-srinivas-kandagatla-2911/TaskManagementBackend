@@ -1,5 +1,5 @@
 import { Field, ID, ObjectType } from "type-graphql";
-import { BaseEntity, BeforeInsert, Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from "typeorm";
+import { BaseEntity, BeforeInsert, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { Role } from "../utils/userRole";
 import { Task } from "./task";
 import bcrypt from "bcryptjs"
@@ -42,8 +42,15 @@ import bcrypt from "bcryptjs"
     default:Role.USER
   })
   role!: Role
+
+  @Field(() => [Task])
+  @ManyToOne(() => Task, taskList => taskList.user)
+  @JoinColumn()
+  taskList!: Task[]
+
+  @Field(() => [Task])
+  @ManyToMany(() => Task, task => task.users)
+  @JoinTable()
+  tasks!: Task[]
+
 }
-
-
-
-

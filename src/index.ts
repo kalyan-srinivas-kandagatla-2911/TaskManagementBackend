@@ -17,7 +17,7 @@ import { authChecker } from "./utils/auth";
 
 dotenv.config()
 
-const corsOrigin = ["http://localhost:3000"]
+const corsOrigin = ["http://localhost:3001"]
 
 const port = process.env.PORT || 8000
 const bootstrap = async () => {
