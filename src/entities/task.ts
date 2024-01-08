@@ -1,6 +1,7 @@
 import { Field, ID, ObjectType } from "type-graphql";
 import { BaseEntity, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user";
+import { Submission } from "./submission";
 
 @ObjectType("Task")
 @Entity("Task")
@@ -34,6 +35,11 @@ export class Task extends BaseEntity{
   @Field(() => [User],{ nullable: true })
   @ManyToMany(() => User, user => user.tasks)
   users!: User[]
+
+  @Field(() => Submission, { nullable: true })
+  @OneToMany(() => Submission, (submission) => submission.task)
+  @JoinColumn()
+  submission!: Submission
 }
 
   

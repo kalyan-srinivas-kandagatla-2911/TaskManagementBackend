@@ -76,8 +76,7 @@ async getTasksCreatedByMe(
   const user = await User.findOne({ where:{ email : email } })
   if(!user) throw new Error("create an Accoount")
   const tasks = await Task.find({where: {user: {id: user.id}}})
-  // const userCreatedTasks = await User.findOne({ relations:["taskList"]})
-  // if(!userCreatedTasks) throw new Error("User is not authenticated")
+
   return tasks
 }
 

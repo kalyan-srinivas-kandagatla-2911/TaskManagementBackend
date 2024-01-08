@@ -3,6 +3,7 @@ import { BaseEntity, BeforeInsert, Column, Entity, JoinColumn, JoinTable, ManyTo
 import { Role } from "../utils/userRole";
 import { Task } from "./task";
 import bcrypt from "bcryptjs"
+import { Submission } from "./submission";
 
  @Entity("User")
  @ObjectType("User")
@@ -52,5 +53,11 @@ import bcrypt from "bcryptjs"
   @ManyToMany(() => Task, task => task.users)
   @JoinTable()
   tasks!: Task[]
+
+  @Field(() => Submission)
+  @OneToMany(() => Submission, (submission) => submission.user)
+  @JoinColumn()
+  submission!: Submission
+
 
 }
