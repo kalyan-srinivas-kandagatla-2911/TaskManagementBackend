@@ -6,6 +6,12 @@ import { Task } from "./task";
 @ObjectType()
 @Entity("Submisson")
 export class Submission extends BaseEntity{
+  filter(arg0: any): any {
+    throw new Error("Method not implemented.");
+  }
+  map(arg0: (sub: any) => Promise<void>): any {
+    throw new Error("Method not implemented.");
+  }
   @Field(type => ID)
   @PrimaryGeneratedColumn("uuid")
   id!: string
@@ -22,9 +28,16 @@ export class Submission extends BaseEntity{
   @Column("simple-array", { nullable: true })
   files!: string[]
 
-  @Field(() => Date)
-  @Column()
+  @Field(() => Date,{ nullable: true })
+  @Column({ nullable: true })
   submittedAt!: Date
+
+  @Field(() => Date, { nullable: true })
+  @Column({ nullable: true })
+  updatedSubmissionAt!: Date
   
+  @Field(() => Boolean)
+  @Column({default: false})
+  approved!: boolean
 
 }

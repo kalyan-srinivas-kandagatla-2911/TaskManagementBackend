@@ -17,13 +17,13 @@ import { authChecker } from "./utils/auth";
 
 dotenv.config()
 
-const corsOrigin = ["http://localhost:3001"]
+const corsOrigin = ["http://localhost:3000", "http://localhost:9000/graphql"]
 
-const port = process.env.PORT || 8000
+const port = process.env.PORT || 9000
 const bootstrap = async () => {
   const schema = await buildSchema({
     resolvers: resolvers,
-    authChecker: authChecker,
+    // authChecker: authChecker,
     validate: { forbidUnknownValues: false },
   })
 

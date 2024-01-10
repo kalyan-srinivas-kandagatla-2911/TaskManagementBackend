@@ -56,13 +56,20 @@ class UserResolver{
   }
   @Query(() => User)
   async getMe(
-    @Ctx() { user } : MyContext
+    // @Ctx() { user } : MyContext
+    @Arg("user_id") user_id: string
   ){
+    const user = await User.findOneOrFail({ where:{ id: user_id } })
     return user
   }
   @Query(() => String)
   helloworld(){
     return "HELLO WORLD"
+  }
+
+  @Query(() => [User])
+  async getUsers(){
+    return User.find()
   }
   
 }

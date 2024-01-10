@@ -11,7 +11,7 @@ export class createSubmissonInput{
 
 @InputType()
 export class modifySubmissionInput{
-  @Field()
+  @Field(() => [String])
   files!: string[]
 
   @Field()
@@ -19,6 +19,11 @@ export class modifySubmissionInput{
 }
 
 @InputType()
-export class approveSubmission{
+export class approveSubmissionInput{
+  @Field()
   sub_id!: string
+
+  @Field()
+  approved!: boolean
+
 }

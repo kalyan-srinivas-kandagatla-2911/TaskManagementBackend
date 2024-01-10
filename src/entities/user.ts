@@ -45,19 +45,17 @@ import { Submission } from "./submission";
   role!: Role
 
   @Field(() => [Task])
-  @ManyToOne(() => Task, taskList => taskList.user)
+  @ManyToOne(() => Task, taskList => taskList.assignedBy)
   @JoinColumn()
   taskList!: Task[]
 
   @Field(() => [Task])
-  @ManyToMany(() => Task, task => task.users)
+  @ManyToMany(() => Task, tasks => tasks.assignedTo)
   @JoinTable()
   tasks!: Task[]
 
-  @Field(() => Submission)
+  @Field(() => [Submission])
   @OneToMany(() => Submission, (submission) => submission.user)
   @JoinColumn()
-  submission!: Submission
-
-
+  submission!: Submission[]
 }

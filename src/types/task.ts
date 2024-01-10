@@ -20,7 +20,7 @@ export class createTaskInput{
 }
 
 @InputType()
-export class editTaskInput{
+export class modifyTaskInput{
 
   @Field()
   task_id!: string
@@ -34,6 +34,7 @@ export class editTaskInput{
   @Field(() => Date,{ nullable: true })
   deadline!: Date
 
-  @Field()
-  assignTask!: "Team_One" | "Team_Two"
+  @Field(() => [String])
+  assignTaskToUsers!: string[]
+
 }

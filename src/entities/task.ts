@@ -28,18 +28,22 @@ export class Task extends BaseEntity{
   @Column({ nullable: true })
   updatedAt!: Date
 
+  @Field(() => Date, { nullable: true })
+  @Column({ nullable: true })
+  createdAt!: Date
+
   @Field(() => User)
   @ManyToOne(() => User, user => user.taskList)
-  user!: User
+  assignedBy!: User
 
-  @Field(() => [User],{ nullable: true })
-  @ManyToMany(() => User, user => user.tasks)
-  users!: User[]
+  @Field(() => [User])
+  @ManyToMany(() => User, assignedTo => assignedTo.tasks)
+  assignedTo!: User[]
 
-  @Field(() => Submission, { nullable: true })
+  @Field(() => [Submission], { nullable: true })
   @OneToMany(() => Submission, (submission) => submission.task)
   @JoinColumn()
-  submission!: Submission
+  submission!: Submission[]
 }
 
   

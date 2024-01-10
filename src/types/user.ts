@@ -34,3 +34,9 @@ export class TaskAssignUserInput{
   @Field()
   name!: string
 }
+
+@InputType()
+export class userIdInput{
+  @Field()
+  user_id!: string
+}
