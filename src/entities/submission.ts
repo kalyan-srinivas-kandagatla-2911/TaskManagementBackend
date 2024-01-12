@@ -18,7 +18,7 @@ export class Submission extends BaseEntity{
 
   @Field((type) => User)
   @ManyToOne(() => User, (user : User) => user.submission)
-  user!: User
+  submittedBy!: User
 
   @Field((type) => Task)
   @ManyToOne(() => Task, (task : Task ) => task.submission)

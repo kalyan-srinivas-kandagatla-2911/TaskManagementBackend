@@ -5,6 +5,7 @@ import { createTaskInput, modifyTaskInput } from "../types/task";
 import { User } from "../entities/user";
 import { In } from "typeorm";
 import { modifySubmissionInput } from "../types/submission";
+import { userIdInput } from "../types/user";
 
 @Resolver(Task)
 class TaskResolver{
@@ -12,11 +13,11 @@ class TaskResolver{
   @Mutation(() => Task)
   async createTask(
     @Arg("data") data: createTaskInput,
-    @Arg("email") email: string 
+    @Arg("user_id") user_id: string 
   ){
     const ifTask = await Task.findOne({ where:{ title: data.title } })
     if(ifTask) throw new Error("task with this title already present ,please edit the task ")
-    const user = await User.findOneOrFail({ where: { email : email } })
+    const user = await User.findOneOrFail({ where: { id : user_id } })
     const date = new Date()
     const users = await User.findBy({ email: In(data.assignTaskToUsers) })
     const task = Task.create({
@@ -56,9 +57,9 @@ class TaskResolver{
 
   @Query(() => [Task])
   async getTaskAssignedToMe(
-    @Arg("email") email: string
+    @Arg("data") data: userIdInput
   ){
-    const user = await User.findOne({ where:{ email : email } })
+    const user = await User.findOne({ where:{ id : data.user_id } })
     if(!user) throw new Error("User not Found")
     const assignedToMe = await Task.find({ where:{ assignedTo:{ id: user.id } }, relations:["assignedTo", "assignedBy"] })
     return assignedToMe

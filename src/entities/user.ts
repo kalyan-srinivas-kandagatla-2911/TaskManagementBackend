@@ -55,7 +55,7 @@ import { Submission } from "./submission";
   tasks!: Task[]
 
   @Field(() => [Submission])
-  @OneToMany(() => Submission, (submission) => submission.user)
+  @OneToMany(() => Submission, (submission) => submission.submittedBy)
   @JoinColumn()
   submission!: Submission[]
 }

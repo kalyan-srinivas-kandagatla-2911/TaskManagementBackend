@@ -19,7 +19,7 @@ export default class submissionResolver{
     if(!task) throw new Error("This is not your Task")
     const date = new Date()
     const submission = Submission.create({
-      user,
+      submittedBy: user,
       task,
       files: data.files,
       submittedAt: date,
@@ -52,53 +52,64 @@ export default class submissionResolver{
   async approveSubmssion(
     @Arg("data") data: approveSubmissionInput 
   ){
-    const ifSubmission = await Submission.findOne({ where:{ id: data.sub_id }, relations:["user"] })
+    const ifSubmission = await Submission.findOne({ where:{ id: data.sub_id }, relations:["submittedBy"] })
     if(!ifSubmission) throw new Error("Submission doesn't exist")
     if(data.approved === true) await Submission.update(ifSubmission.id,{
       approved: true
     })
     return true
+
   }
 
-
-  // @Query(() => [Submission])
-  // async getUserSubmissions(
-  //   @Arg("user_id") user_id: string 
-  // ){
-  //   const user = await User.findOne({ where:{ id: user_id }})
-  //   if(!user) throw new Error("not authenticated")
-  //   const subs: Submission[] = []
-  //   if(user.submission){
-  //     await Promise.all(
-  //     )
-  //   }
-  //   return subs
-  // }
-
-  // @Query(() => [Submission])
-  // async getSubmissions() {
-  //   return await Submission.find({relations: ["user", "task"]})
-  // }
-
   @Query(() => [Submission])
+  async getUserSubmissions(
+    @Arg("user_id") user_id: string
+  ){
+    const ifUser = await User.findOne({ where:{ id: user_id } })
+    if(!ifUser) throw new Error("create an account ")
+    // const usersubs = new Array<Submission>()
+    // if(ifUser.submission){
+    //   await Promise.all(
+    //     ifUser.submission.map(async (sub) => {
+    //       const subs = await Submission.findOneOrFail({ where:{ id:sub.id } , relations:["task", "submittedBy"]})
+    //       usersubs.push(subs)
+    //     })
+    //   )
+    //   return usersubs
+    // }
+    // if(ifUser.submission){
+      const usersubs = await Submission.find({ where:{ submittedBy:{ id: user_id } } , relations:["submittedBy"]})
+      return usersubs 
+    // }
+  }
+  
+  @Query(() => [Submission])
+  // the submissions that are submiited by yser and those that are approved are fetched
   async getApprovedUserSubmissions(
     @Arg("user_id") user_id: string
   ){
-    const user = await User.findOne({ where:{ id: user_id } ,relations:["submission"]})
-    if(!user) throw new Error("not authenticated")
-    const approvedSubs : Submission[] = []
-    if(user.submission){
-      await Promise.all(
-        user.submission.map(async (sub) => {
-          const submi = await Submission.findOneOrFail({ where:{ id: sub.id }, relations:["task"] })
-          if(submi.approved === true) approvedSubs.push(submi)
-          
-        })
-      )
-    }
-    return approvedSubs
+    const ifUser = await User.findOne({ where:{ id: user_id } ,relations:["submission"]})
+    if(!ifUser) throw new Error("not authenticated")
+    // const approvedUserSubs : Submission[] = []
+    // if(ifUser.submission){
+    //   await Promise.all(
+    //     ifUser.submission.map(async (sub) => {
+    //       const submi = await Submission.findOneOrFail({ where:{ id: sub.id }, relations:["task", "submittedBy"] })
+    //       if(submi.approved === true) approvedUserSubs.push(submi)
+    //     })
+    //   )
+    // }
+    const approvedUserSubs = await Submission.find({ where:{ submittedBy:{ id: user_id },approved:true } , relations:["submittedBy"]})
+    return approvedUserSubs
   }
+  
 
+  // @Query(() => [Submission])
+  // async getSubmissionsDoneByUsertoWhomIassignedTaskTo(
+  //   @Arg("user_id") user_id:string
+  // ){
 
+  // }
 }
+
 
