@@ -45,32 +45,20 @@ const bootstrap = async () => {
     expressMiddleware(server,{
     context: async ({ req,res }:{req: express.Request,res: express.Response;}) => {
       let user: any;
-      if (req.headers.cookie) {
-        
-        const token  = req.headers.cookie.split("token")[1];
+      if (req.cookies) {
+        const token  = req.cookies.token;
         if(token) {
-          const decoded = jwt.verify(
-            token,
-            process.env.JWT_SECRET || "jakkas"
-          ) as any;
-          user = await User.findOne({
-            where: { id: decoded.id }
-          })
-        }
-      }
-      
-      else if (req.headers.authorization) {
-        const token = req.headers.authorization.split("token=")[1]
-        if(token) {
-          const decoded = jwt.verify(
-            token,
-            process.env.JWT_SECRET! 
-            
-          ) as any;
-          
-              user = await User.findOne({
-                where: { id: decoded.id } 
-              })
+          try {
+            const decoded = jwt.verify(
+              token,
+              process.env.JWT_SECRET! 
+            ) as any;
+            user = await User.findOne({
+              where: { id: decoded.id }
+            })
+          } catch(err: any) {
+            if(err.message === "jwt malformed") res.clearCookie("token")
+          }
         }
       }
       return { req, res, user };

@@ -45,7 +45,7 @@ import { Submission } from "./submission";
   role!: Role
 
   @Field(() => [Task])
-  @ManyToOne(() => Task, taskList => taskList.assignedBy)
+  @OneToMany(() => Task, taskList => taskList.assignedBy)
   @JoinColumn()
   taskList!: Task[]
 
