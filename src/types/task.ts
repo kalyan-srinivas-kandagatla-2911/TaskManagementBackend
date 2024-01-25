@@ -34,7 +34,7 @@ export class modifyTaskInput{
   @Field(() => Date,{ nullable: true })
   deadline!: Date
 
-  @Field(() => [String])
+  @Field(() => [String], { nullable: true })
   assignTaskToUsers!: string[]
 
 }

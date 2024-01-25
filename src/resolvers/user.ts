@@ -23,10 +23,7 @@ class UserResolver{
     await user.save()
 
     let token = jwt.sign({ id: user.id }, "jakkas"!)
-    res.cookie("token",token,{ 
-      httpOnly: false,
-      secure: true
-    })
+    res.cookie("token",token,{ httpOnly: false })
 
     return user
   }
@@ -42,7 +39,7 @@ class UserResolver{
     if(!crctPass) throw new Error("invalid Crednential")
     
     let token = jwt.sign({ id: ifUser.id }, "jakkas"!)
-    res.cookie("token", token, { httpOnly: false })
+    res.cookie("token", token)
     
     return ifUser
   }

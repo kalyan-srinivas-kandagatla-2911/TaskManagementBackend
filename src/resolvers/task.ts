@@ -15,11 +15,10 @@ class TaskResolver{
     @Arg("data") data: createTaskInput,
     @Arg("user_id") user_id: string 
   ){
-    const ifTask = await Task.findOne({ where:{ title: data.title } })
-    if(ifTask) throw new Error("task with this title already present ,please edit the task ")
     const user = await User.findOneOrFail({ where: { id : user_id } })
     const date = new Date()
     const users = await User.findBy({ email: In(data.assignTaskToUsers) })
+    console.log(date)
     const task = Task.create({
       ...data,
       assignedBy:user,
@@ -35,23 +34,24 @@ class TaskResolver{
   async modifyTask(
     @Arg("data") data:modifyTaskInput
   ){
-    const ifTask = await Task.findOne({ where: { id: data.task_id } })
+    const ifTask = await Task.findOne({ where: { id: data.task_id } })  
     if(!ifTask) throw new Error("please create an Task ")
     const date = new Date()
-    const {affected} = await Task.update(ifTask.id,{
+    const { affected } = await Task.update(ifTask.id,{
       ...data,
       updatedAt:date
     })
     return affected === 1
   }
 
+  
   @Query(() => [Task])
   async getTasksAssignedByMe(
-    @Arg("email") email: string
+    @Arg("data") data: userIdInput
   ){
-    const user = await User.findOne({ where:{ email : email } })
+    const user = await User.findOne({ where:{ id : data.user_id } })
     if(!user) throw new Error("User not Found")
-    const assignedByMe = await Task.find({ where:{ assignedBy:{ id: user.id } }, relations:["assignedTo"] })
+    const assignedByMe = await Task.find({ where:{ assignedBy:{ id: user.id } }, relations:["assignedTo", "submission"] })
     return assignedByMe
   }
 
@@ -159,6 +159,15 @@ class TaskResolver{
 // ){
 //   const tasks = await User.find({where: {user: {id: user.id}}, relations:["tasks"]});
 //   return tasks 
+// }
+
+// @Mutation(() => Boolean)
+// async deleteAllTaskscreatedByMe(
+//   @Arg("data") data: userIdInput
+// ){
+//   const user = await User.findOne({ where:{ id: data.user_id } })
+//   const tasks = await Task.find({ where:{ assignedBy:{ id: user?.id } } })
+  
 // }
 
 

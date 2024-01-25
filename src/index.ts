@@ -33,7 +33,6 @@ const bootstrap = async () => {
     schema,
     plugins: [ApolloServerPluginDrainHttpServer({httpServer})]
   })
-  
   await server.start()
   app.use(
     "/graphql",
@@ -43,19 +42,24 @@ const bootstrap = async () => {
     }),
     express.json(),
     expressMiddleware(server,{
-    context: async ({ req,res }:{req: express.Request,res: express.Response;}) => {
+    context: async ({ req,res }:{req: express.Request,res: express.Response}) => {
       let user: any;
-      if (req.cookies) {
-        const token  = req.cookies.token;
+      if (req.headers.cookie) {
+        const token  = req.headers.cookie.split("token=")[1]
+        console.log(token)
         if(token) {
+          console.log("1")
           try {
+            console.log("2")
             const decoded = jwt.verify(
               token,
-              process.env.JWT_SECRET! 
+              "jakkas"!
             ) as any;
+            console.log(decoded)
             user = await User.findOne({
               where: { id: decoded.id }
             })
+            console.log(user)
           } catch(err: any) {
             if(err.message === "jwt malformed") res.clearCookie("token")
           }
