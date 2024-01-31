@@ -61,7 +61,7 @@ class TaskResolver{
   ){
     const user = await User.findOne({ where:{ id : data.user_id } })
     if(!user) throw new Error("User not Found")
-    const assignedToMe = await Task.find({ where:{ assignedTo:{ id: user.id } }, relations:["assignedTo", "assignedBy"] })
+    const assignedToMe = await Task.find({ where:{ assignedTo:{ id: user.id } }, relations:["assignedTo", "assignedBy", "submission"] })
     return assignedToMe
   }
 
