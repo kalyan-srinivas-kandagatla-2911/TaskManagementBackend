@@ -23,9 +23,6 @@ export class SignInInput{
 
   @Field()
   password!: string
-
-  @Field()
-  team!: "Team_One" | "Team_Two"
   
 }
 
